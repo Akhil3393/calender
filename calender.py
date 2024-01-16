@@ -1,26 +1,30 @@
 import streamlit as st
-import calendar
-from datetime import date
 
-def display_calendar(year, month):
-    cal = calendar.monthcalendar(year, month)
-    weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+def calculator():
+    st.title("Simple Calculator")
 
-    st.table([[weekdays[i] for i in range(7)]])
-    for week in cal:
-        st.table([week])
+    num1 = st.number_input("Enter the first number:", step=1)
+    operation = st.selectbox("Select operation:", ["Addition", "Subtraction", "Multiplication", "Division"])
+    num2 = st.number_input("Enter the second number:", step=1)
+
+    result = 0
+
+    if operation == "Addition":
+        result = num1 + num2
+    elif operation == "Subtraction":
+        result = num1 - num2
+    elif operation == "Multiplication":
+        result = num1 * num2
+    elif operation == "Division":
+        if num2 != 0:
+            result = num1 / num2
+        else:
+            st.error("Error: Division by zero")
+
+    st.success(f"Result: {result}")
 
 def main():
-    st.title("Calendar Web App")
-
-    today = date.today()
-    current_year = today.year
-    current_month = today.month
-
-    year = st.slider("Select Year", current_year - 10, current_year + 10, current_year)
-    month = st.slider("Select Month", 1, 12, current_month)
-
-    display_calendar(year, month)
+    calculator()
 
 if _name_ == "_main_":
     main()

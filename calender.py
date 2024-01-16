@@ -1,5 +1,6 @@
 import streamlit as st
 import calendar
+from datetime import date
 
 def display_calendar(year, month):
     cal = calendar.monthcalendar(year, month)
@@ -9,13 +10,17 @@ def display_calendar(year, month):
     for week in cal:
         st.table([week])
 
-def calendar_app():
-    st.title("Simple Calendar")
+def main():
+    st.title("Calendar Web App")
 
-    today = st.date_input("Select a date", value=None)
-    year, month, _ = today.timetuple()[:3]
+    today = date.today()
+    current_year = today.year
+    current_month = today.month
+
+    year = st.slider("Select Year", current_year - 10, current_year + 10, current_year)
+    month = st.slider("Select Month", 1, 12, current_month)
 
     display_calendar(year, month)
 
 if _name_ == "_main_":
-    calendar_app()
+    main()
